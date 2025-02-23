@@ -32,36 +32,43 @@ class Node:
 
 class Solution:
     def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        def flat(head):
-            if not head: 
-                return None
-            
-            curr = head
-            prev = None
-            while curr:
+
+        if not head:
+            return None
+
+        curr = head
+        while curr:
+
+            # if we find child node
+            if curr.child:
+                nextNode = curr.next
                 
-                # process sublist
-                if curr.child:
-                    childNode = curr.child
-                    nextNode = curr.next
-                    
-                    # rewire current node
-                    curr.next = childNode
-                    childNode.prev = curr
-                    
-                    # get and rewire tail
-                    tailNode = flat(childNode)
-                    if tailNode and nextNode:
-                        tailNode.next = nextNode
-                        nextNode.prev = tailNode
-
-                    # set child to None
-                    curr.child = None
-
-                prev = curr
-                curr = curr.next
-            return prev
+                # find tail of child list
+                tail = curr.child
+                while tail.next:
+                    tail = tail.next
             
-        flat(head)
+                # rewire
+                curr.next = curr.child
+                curr.child.prev = curr
+                tail.next = nextNode
+                if nextNode:
+                    nextNode.prev = tail
+
+                curr.child = None
+
+            curr = curr.next
         return head
+                
+
+
+
+
+
+
+
+
+
+
+
         
