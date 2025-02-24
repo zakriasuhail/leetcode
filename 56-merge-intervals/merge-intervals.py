@@ -6,14 +6,8 @@ class Solution:
             prevStart, prevEnd = res[-1]
 
             # case 1: partial overlap
-            if start <= prevEnd and end >= prevEnd:
+            if prevEnd >= start:
                 res[-1][1] = max(end, prevEnd)
-
-
-            # case 2: full overlap
-            elif start < prevEnd and end < prevEnd:
-                continue
-
             # case 3: no overlap
             else:
                 res.append([start, end])
