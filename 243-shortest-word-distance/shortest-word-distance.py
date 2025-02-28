@@ -1,18 +1,32 @@
 class Solution:
     def shortestDistance(self, wordsDict: List[str], word1: str, word2: str) -> int:
-        word1Indices = []
-        word2Indices = []
+        res = float('inf')
+        ptr1 = ptr2 = -1
+
         for i, word in enumerate(wordsDict):
+
             if word == word1:
-                word1Indices.append(i)
+                ptr1 = i
+            
             elif word == word2:
-                word2Indices.append(i)
-        
-        res = float("inf")
-        for word1Indice in word1Indices:
-            for word2Indice in word2Indices:
-                res = min(res, abs(word2Indice - word1Indice))
+                ptr2 = i
+
+            if ptr1 != -1 and ptr2 != -1:
+                res = min(res, abs(ptr1 - ptr2))
         return res
+
+
+
+
+
+
+
+
+        
+
+
+
+
 
 
         
