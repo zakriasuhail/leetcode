@@ -1,36 +1,20 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
 
-        res = []
-
-
-        def dfs(path, curr):
-            nonlocal res
-
+        def dfs(curr, path):
+            
             # base cases
-            if curr == len(graph) - 1:
+            if curr == dest:
                 res.append(path[:])
                 return
-
-            # recursive case
-            for node in graph[curr]:
-                path.append(node)
-                dfs(path, node)
+            # recurse
+            for neighbor in graph[curr]:
+                path.append(neighbor)
+                dfs(neighbor, path)
                 path.pop()
+            
 
-        dfs([0], 0)
+        res = []
+        src, dest = 0, len(graph) - 1
+        dfs(src, [0])
         return res
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
