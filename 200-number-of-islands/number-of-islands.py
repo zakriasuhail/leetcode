@@ -9,19 +9,20 @@ class Solution:
                 neighbors.append((row + x, col + y))
         return neighbors
 
+    def bfs(self, node, grid):
+        queue = deque([node])
+        while queue:
+            row, col = queue.popleft()
+            
+            # get neighbors
+            for nr, nc in self.getNeighbors(row, col, grid):
+                grid[nr][nc] = "0"
+                queue.append((nr, nc))
+
 
     def numIslands(self, grid: List[List[str]]) -> int:
         
-        # run breadth first search
-        def bfs(node):
-            queue = deque([node])
-            while queue:
-                row, col = queue.popleft()
-                
-                # get neighbors
-                for nr, nc in self.getNeighbors(row, col, grid):
-                    grid[nr][nc] = "0"
-                    queue.append((nr, nc))
+
 
 
         
@@ -31,7 +32,7 @@ class Solution:
                 if grid[row][col] == "1":
                     islands += 1
                     grid[row][col] = "0"
-                    bfs((row, col))
+                    self.bfs((row, col), grid)
         return islands
 
 
