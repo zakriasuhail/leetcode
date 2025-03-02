@@ -19,20 +19,31 @@ class Solution:
                 grid[nr][nc] = "0"
                 queue.append((nr, nc))
 
+        
+    def dfs(self, row, col, grid):
+        if (row < 0 or row >= len(grid) or
+            col < 0 or col >= len(grid[0]) or 
+            grid[row][col] == "0"):
+            return
+        
+        # mark as visited
+        grid[row][col] = "0"
 
-    def numIslands(self, grid: List[List[str]]) -> int:
+        # traverse
+        self.dfs(row + 1, col, grid)
+        self.dfs(row - 1, col, grid)
+        self.dfs(row, col + 1, grid)
+        self.dfs(row, col - 1, grid)
         
 
 
-
-        
+    def numIslands(self, grid: List[List[str]]) -> int:  
         islands = 0
         for row in range(len(grid)):
             for col in range(len(grid[0])): 
                 if grid[row][col] == "1":
                     islands += 1
-                    grid[row][col] = "0"
-                    self.bfs((row, col), grid)
+                    self.dfs(row, col, grid)
         return islands
 
 
