@@ -6,13 +6,6 @@ class Node:
         self.children = children if children is not None else []
 """
 
-class NewNode:
-    def __init__(self, val, children, parent=None):
-        self.val = val
-        self.children = children
-        self.parent = parent
-
-
 class Solution:
     def findRoot(self, tree: List['Node']) -> 'Node':
 
