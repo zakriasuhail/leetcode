@@ -8,13 +8,14 @@ class Node:
 
 class Solution:
     def findRoot(self, tree: List['Node']) -> 'Node':
-
-        seen = set()
+        
+        currSum = 0
         for node in tree:
+            currSum += node.val
             for child in node.children:
-                seen.add(child)
-
+                currSum -= child.val
+            
         for node in tree:
-            if node not in seen:
+            if currSum == node.val:
                 return node
         
