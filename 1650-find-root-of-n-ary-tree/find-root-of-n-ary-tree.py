@@ -16,12 +16,12 @@ class NewNode:
 class Solution:
     def findRoot(self, tree: List['Node']) -> 'Node':
 
-        hmap = defaultdict(list)
+        seen = set()
         for node in tree:
             for child in node.children:
-                hmap[child] = (1, len(child.children))
+                seen.add(child)
 
         for node in tree:
-            if node not in hmap:
+            if node not in seen:
                 return node
         
