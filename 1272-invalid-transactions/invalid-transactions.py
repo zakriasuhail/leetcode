@@ -1,68 +1,36 @@
 """
-observations:
-- use name as unique id
-- we also need to check that all time - 60 transactions are in the same city
 
 
-key takeaways:
-- we can store latest transaction by each user and use that to validate time-city diff
-
-
-approach - 1:
-=============
-- create a dict {name : [time, amount, city]}
-- whenever there is an invalid transaction because of the city-time diff, pop transactions into a result array
 
 """
 class Solution:
-
-    def __init__(self):
-        self.transMap = collections.defaultdict(list)
-        self.invalid = []
-        self.transactionLimit = 1000
-
-    def isValid(self, transaction):
+    def isValid(self, transaction, transactionsDict):
         name, time, amount, city = transaction.split(",")
 
-        if int(amount) > self.transactionLimit:
+        # excess amount
+        if int(amount) > 1000:
             return False
 
-        for prevTime, prevAmount, prevCity in self.transMap[name]:
-            if city != prevCity and abs(int(time) - prevTime) <= 60:
+        # fraudulent transaction
+        for prevTime, prevAmount, prevCity in transactionsDict[name]:
+            if abs(prevTime - int(time)) <= 60 and city != prevCity:
                 return False
-        
         return True
-            
 
     def invalidTransactions(self, transactions: List[str]) -> List[str]:
-        
+        # build transaction history
+        transactionsDict = defaultdict(list)
 
         for transaction in transactions:
             name, time, amount, city = transaction.split(",")
+            transactionsDict[name].append((int(time), int(amount), city))
 
-            # add to map
-            self.transMap[name].append((int(time), int(amount), city))
-
-        
         # validate transactions
+        invalidTransactions = []
         for transaction in transactions:
-            if not self.isValid(transaction):
-                self.invalid.append(transaction)
-
-        return self.invalid
-            
-
-        
+            if not self.isValid(transaction, transactionsDict):
+                invalidTransactions.append(transaction)
+        return invalidTransactions
 
 
 
-
-
-
-
-
-
-
-
-
-        
