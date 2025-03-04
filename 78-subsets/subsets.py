@@ -17,17 +17,17 @@ class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
         
-        def dfs(path, candidates):
+        def dfs(path, index):
         
             res.append(path[:])
 
-            for i in range(len(candidates)):
-                path.append(candidates[i])
-                dfs(path, candidates[i + 1:])
+            for i in range(index, len(nums)):
+                path.append(nums[i])
+                dfs(path, i + 1)
                 path.pop()
 
 
 
 
-        dfs([], nums)
+        dfs([], 0)
         return res
