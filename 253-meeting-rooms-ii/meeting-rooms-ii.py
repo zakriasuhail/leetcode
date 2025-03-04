@@ -14,17 +14,17 @@
 """
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        startTimes = sorted(intervals, key=lambda x:x[0])
-        endTimes = sorted(intervals, key=lambda x:x[1])
+        startTimes = sorted([startTime for startTime, endTime in intervals])
+        endTimes = sorted([endTime for startTime, endTime in intervals])
 
         rooms = 0
         maxRooms = 0
         start = end = 0
-        while start < len(intervals) and end < len(intervals):
-            if startTimes[start][0] < endTimes[end][1]:
+        while start < len(intervals):
+            if startTimes[start] < endTimes[end]:
                 rooms += 1
-                start += 1
                 maxRooms = max(rooms, maxRooms)
+                start += 1
             else:
                 rooms -= 1
                 end += 1
