@@ -14,23 +14,17 @@ class Solution:
 
             # base cases
             if openBracs == n and closeBracs == n:
-                res.append("".join(path))
+                res.append(path)
                 return
 
             # recursive cases
             if closeBracs < openBracs:
-                path.append(")")
-                gen(path, openBracs, closeBracs + 1)
-                path.pop()
+                gen(path + ")", openBracs, closeBracs + 1)
 
             if openBracs <= n:
-                path.append("(")
-                gen(path, openBracs + 1, closeBracs)
-                path.pop()
-
-
+                gen(path + "(", openBracs + 1, closeBracs)
         
-        gen(["("], 1, 0)
+        gen("(", 1, 0)
         return res
 
 
