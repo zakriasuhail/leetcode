@@ -19,23 +19,27 @@ col = 4
 """
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        rows = len(text1) + 1
-        cols = len(text2) + 1
-
-        # create dp array
-        dp = [[0] * cols for _ in range(rows)]
+        
+        if len(text2) < len(text1):
+            text1, text2 = text2, text1
+        
+        # create dp arrays
+        curr = [0] * (len(text1) + 1)
+        prev = [0] * (len(text1) + 1)
 
         # iterate
-        for row in range(rows - 2, -1, -1):
-            for col in range(cols - 2, -1, -1):
+        for row in range(len(text2) - 1, -1, -1):
+            for col in range(len(text1) - 1, -1, -1):
 
-                # if have a match
-                if text1[row] == text2[col]:
-                    dp[row][col] = 1 + dp[row + 1][col + 1]
+                # if we have a match
+                if text1[col] == text2[row]:
+                    curr[col] = 1 + prev[col + 1]
                 else:
-                    dp[row][col] = max(dp[row + 1][col], dp[row][col + 1])
-        return dp[0][0]
-
+                    curr[col] = max(curr[col + 1], prev[col])
+                
+            # swap at each row
+            curr, prev = prev, curr
+        return prev[0]
 
                 
 
