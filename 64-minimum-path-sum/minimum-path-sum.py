@@ -20,21 +20,26 @@ col = 1
 """
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
-        m = len(grid)
-        n = len(grid[0])
-        dp = [[0] * n for _ in range(m)]
+        rows = len(grid)
+        cols = len(grid[0])
+        dp = [[0] * cols for row in range(rows)]
 
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
+        for row in range(rows):
+            for col in range(cols):
+
+                weight = grid[row][col]
 
                 if row - 1 >= 0 and col - 1 >= 0:
-                    dp[row][col] = grid[row][col] + min(dp[row - 1][col], dp[row][col - 1])
+                    weightSum = weight + min(dp[row - 1][col], dp[row][col - 1])
                 elif row - 1 >= 0:
-                    dp[row][col] = dp[row - 1][col] + grid[row][col]
+                    weightSum = weight + dp[row - 1][col]
                 elif col - 1 >= 0:
-                    dp[row][col] = dp[row][col - 1] + grid[row][col]
+                    weightSum = weight + dp[row][col - 1]
                 else:
-                    dp[row][col] = grid[row][col]
-        print(dp)
+                    weightSum = weight
+
+                # add to dp matrix
+                dp[row][col] = weightSum
+
         return dp[-1][-1]
         
