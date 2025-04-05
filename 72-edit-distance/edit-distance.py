@@ -11,7 +11,8 @@ class Solution:
 
         # solve subproblems
         for row in range(len(word2) - 1, -1, -1):
-            curr[-1] = len(word2) - row
+            print(curr)
+            print(prev)
             for col in range(len(word1) - 1, -1, -1):
 
                 # if char are the same
@@ -19,8 +20,12 @@ class Solution:
                     curr[col] = prev[col + 1]
                 else:
                     curr[col] = 1 + min(curr[col + 1], prev[col], prev[col + 1])
-        
+
             curr, prev = prev, curr
+            curr[-1] = len(word2) - row + 1
+            
+            print("------------------")
+
         return prev[0]
 
          
