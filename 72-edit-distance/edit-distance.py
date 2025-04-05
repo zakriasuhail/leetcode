@@ -11,8 +11,6 @@ class Solution:
 
         # solve subproblems
         for row in range(len(word2) - 1, -1, -1):
-            print(curr)
-            print(prev)
             for col in range(len(word1) - 1, -1, -1):
 
                 # if char are the same
@@ -23,8 +21,6 @@ class Solution:
 
             curr, prev = prev, curr
             curr[-1] = len(word2) - row + 1
-            
-            print("------------------")
 
         return prev[0]
 
