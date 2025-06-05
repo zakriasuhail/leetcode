@@ -1,45 +1,50 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
 
-        def getNeighbors(row, col):
-            neighbors = []
-            directions = [(1,0), (-1,0), (0,1), (0,-1)]
-            for dirRow, dirCol in directions:  
+        def getNeighbors(r, c):
+            dirs = [(1,0), (0,1), (-1, 0), (0, -1)]
+            res = []
+            for dx, dy in dirs:
 
-                newRow, newCol = dirRow + row, dirCol + col
+                if (
+                    0 <= r + dx < len(grid) and
+                    0 <= c + dy < len(grid[0]) and
+                    grid[r + dx][c + dy] == "1"
+                ):
+                
+                    res.append((r + dx, c + dy))
+            return res
+                
 
 
-                if (newRow >= 0 and newRow < rows and
-                    newCol >= 0 and newCol < cols and 
-                    grid[newRow][newCol] == "1"):
-                    neighbors.append((newRow, newCol))
-            return neighbors
+        def bfs(row, col):
 
-        def bfs(coord):
-            queue = deque([coord])
+            queue = deque([(row, col)])
 
             while queue:
 
-                row, col = queue.popleft()
+                currRow, currCol = queue.popleft()
 
-                # mark as visited
-                grid[row][col] = "0"
-
-                for nr, nc in getNeighbors(row, col):
+                # get neighbors
+                for nr, nc in getNeighbors(currRow, currCol):
+                    queue.append((nr, nc)) 
                     grid[nr][nc] = "0"
-                    queue.append((nr, nc))
 
 
 
-        rows = len(grid)
-        cols = len(grid[0])
+
         islands = 0
-        for row in range(rows):
-            for col in range(cols):
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+
                 if grid[row][col] == "1":
+                    # mark visited
+                    grid[row][col] = "0"
+                    bfs(row, col)
                     islands += 1
-                    bfs((row, col))
 
         return islands
 
+
+            
         
